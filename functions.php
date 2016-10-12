@@ -75,59 +75,23 @@
 		return $error;	
 	}
 	
-	function savePeople ($gender, $color) {
+	
+	function bdayandtel ($sunnipaev, $telefon) {
 		
 		$mysqli = new mysqli($GLOBALS["serverHost"],$GLOBALS["serverUsername"],$GLOBALS["serverPassword"],$GLOBALS["database"]);
 
-		$stmt = $mysqli->prepare("INSERT INTO clothingOnTheCampus (gender, color) VALUES (?, ?)");
+		$stmt = $mysqli->prepare("INSERT INTO bdayandtel (sunnipaev, telefon) VALUES (?, ?)");
 		echo $mysqli->error;
 
-		$stmt->bind_param("ss", $gender, $color);
+		$stmt->bind_param("ss", $sunnipaev, $telefon);
 		
 		if ($stmt->execute()) {
-			echo "salvestamine õnnestus";
+			echo "Salvestamine Onnestus";
 		} else {
 			echo "ERROR ".$stmt->error;
 		}
 		
 	}
-	
-	function getAllPeople () {
-	
-		$mysqli = new mysqli($GLOBALS["serverHost"],$GLOBALS["serverUsername"],$GLOBALS["serverPassword"],$GLOBALS["database"]);
-
-		$stmt = $mysqli->prepare("
-			SELECT id, gender, color, created 
-			FROM clothingOnTheCampus
-		");
-		echo $mysqli->error;
-		
-		$stmt->bind_result($id, $gender, $color, $created );
-		$stmt->execute();
-		
-		//array ("Mikuz", "M")
-		$result = array();
-		
-		//seni kuni on uks rida andmeid saada (10 rida = 10 korda)
-		while($stmt->fetch()){
-			
-			$person = new StdClass();
-			$person->id = $id;
-			$person->gender = $gender;
-			$person->clothingColor = $color;
-			$person->created = $created;
-			//vasakul pool voib ise sisestada, paremal poolt tuleb sql`s
-			
-			//echo $color."<br>";
-			array_push($result, $person);
-		}
-		
-		$stmt->close();
-		$mysqli->close();
-		
-		return $result;
-	}
-	
 	
 	function cleanInput($input ) {
 		
@@ -140,28 +104,4 @@
 		return $input;
 		
 	}
-	
-	
-	
-	/*function sum ($x, $y) {
-		
-		return $x + $y;
-		
-	}
-	
-	function hello ($firstname, $lastname) {
-		
-		return "Tere tulemast ".$firstname." ".$lastname."!";
-		
-	}
-	
-	echo sum(5476567567,234234234);
-	echo "<br>";
-	$answer = sum(10,15);
-	echo $answer;
-	echo "<br>";
-	echo hello ("Romil", "R.");
-	*/
-
-
 ?>

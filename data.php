@@ -19,25 +19,15 @@
 	}
 	
 	
-
-	if ( isset($_POST["gender"]) &&
-		 isset($_POST["color"]) &&
-		 !empty($_POST["gender"]) &&
-		 !empty($_POST["color"])
+	if ( isset($_POST["sunnipaev"]) &&
+		 isset($_POST["telefon"]) &&
+		 !empty($_POST["sunnipaev"]) &&
+		 !empty($_POST["telefon"])
 	  ) {
+		$sunnipaev = cleanInput($_POST["sunnipaev"]);
 		
-		$gender = cleanInput($_POST["gender"]);
-		
-		savePeople($gender, cleanInput($_POST["color"]));
-		
-		
+		bdayandtel($sunnipaev, cleanInput($_POST["telefon"]));
 	}
-	$people = getAllPeople();
-	
-	//echo "<pre>";
-	//var_dump($people);
-	//[] voib trukkida parast people kui tahame konkreetset 
-	//echo "</pre>";
 	
 	
 ?>
@@ -47,62 +37,13 @@
 	<a href="?logout=1">Logi välja</a>
 </p> 
 
-<h1>Salvesta inimene</h1>
+<h1>Registreerimise lopetamine</h1>
 <form method="POST">
-
-	<label>Sugu</label><br>
-
-	<input type="radio" name="gender" value="male" > Mees<br>
-	<input type="radio" name="gender" value="female" > Naine<br>
-	<input type="radio" name="gender" value="other" > Ei oska oelda<br>
-
-	<br>
-	<label>Varv</label><br>
-	<input name="color" type="color"<br>
-	<br><br>
-	<input type="submit" value="Salvesta">
-	
+  Sunnipaev:
+  <input type="date" name="sunnipaev">
+  <br></br>
+  Telefoni number:
+  <input type='tel' name="telefon" placeholder="Naide 56883412" pattern='\d{4}\d{4}' title='Telefoni numbri naide 9999-9999)'> 
+  <br></br>
+  <input type="submit" value="Salvesta">
 </form>
-
-
-<h2>Arhiiv</h2>
-<?php
-
-	foreach($people as $p){
-		
-		echo 	"<h3 style=' color:".$p->clothingColor."; '>"
-				.$p->gender
-				."</h3>";
-		
-	}
-
-
-
-?>
-
-<h2>Arhiivtabel</h2>
-<?php 
-	
-	$html = "<table>";
-		$html .= "<tr>";
-			$html .= "<th>id</th>";
-			$html .= "<th>Sugu</th>";
-			$html .= "<th>Värv</th>";
-			$html .= "<th>Loodud</th>";
-		$html .= "</tr>";
-
-		foreach($people as $p){
-			$html .= "<tr>";
-				$html .= "<td>".$p->id."</td>";
-				$html .= "<td>".$p->gender."</td>";
-				$html .= "<td style=' background-color:".$p->clothingColor."; '>"
-						.$p->clothingColor
-						."</td>";
-				$html .= "<td>".$p->created."</td>";
-			$html .= "</tr>";	
-		}
-		
-	$html .= "</table>";
-	echo $html;
-
-?>
