@@ -29,6 +29,7 @@
 		bdayandtel($sunnipaev, cleanInput($_POST["telefon"]));
 	}
 	
+	$infoall = dataAll();
 	
 ?>
 <h1>Data</h1>
@@ -47,3 +48,26 @@
   <br></br>
   <input type="submit" value="Salvesta">
 </form>
+
+<h2>Kontakti info</h2>
+	<?php 
+	$html = "<table>";
+		$html .= "<tr>";
+			$html .= "<th>id</th>";
+			$html .= "<th>Sunnipaev</th>";
+			$html .= "<th>Telefon</th>";
+			$html .= "<th>Loodud</th>";
+		$html .= "</tr>";
+
+		foreach($infoall as $ia){
+			$html .= "<tr>";
+				$html .= "<td>".$ia->id."</td>";
+				$html .= "<td>".$ia->sunnipaev."</td>";
+				$html .= "<td>".$ia->telefon."</td>";
+				$html .= "<td>".$ia->loodud."</td>";
+			$html .= "</tr>";	
+		}
+		
+	$html .= "</table>";
+	echo $html;
+?>

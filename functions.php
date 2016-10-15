@@ -93,6 +93,41 @@
 		
 	}
 	
+	function dataAll () {
+	
+		$mysqli = new mysqli($GLOBALS["serverHost"],$GLOBALS["serverUsername"],$GLOBALS["serverPassword"],$GLOBALS["database"]);
+
+		$stmt = $mysqli->prepare("
+			SELECT id, sunnipaev, telefon, loodud
+			FROM bdayandtel
+		");
+		echo $mysqli->error;
+		
+		$stmt->bind_result($id, $sunnipaev, $telefon, $loodud );
+		$stmt->execute();
+		
+		$result = array();
+		
+		//seni kuni on uks rida andmeid saada (10 rida = 10 korda)
+		while($stmt->fetch()){
+			
+			$person = new StdClass();
+			$person->id = $id;
+			$person->sunnipaev = $sunnipaev;
+			$person->telefon = $telefon;
+			$person->loodud = $loodud;
+			//vasakul pool voib ise sisestada, paremal poolt tuleb sql`s
+			
+			//echo $color."<br>";
+			array_push($result, $person);
+		}
+		
+		$stmt->close();
+		$mysqli->close();
+		
+		return $result;
+	}
+	
 	function cleanInput($input ) {
 		
 		//input = "mikuz@tlu.ee     "

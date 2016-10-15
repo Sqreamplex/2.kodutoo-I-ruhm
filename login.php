@@ -93,9 +93,9 @@
 		echo "parool ".$_POST["signupPassword"]."<br>";
 		echo "räsi ".$password."<br>";
 		//echo $serverPassword;
-		
-		$singnupEmail = cleanInput($signupEmail);
+		$signupEmail = cleanInput($signupEmail);
 		$password = cleanInput($password);
+		$gender = cleanInput($gender);
 		signup($signupEmail, $password, $gender);
 	}
 	
@@ -106,8 +106,9 @@
 		 !empty($_POST["loginEmail"]) &&
 		 !empty($_POST["loginPassword"])
 	  ) {
-		$_POST["loginEmail"] = cleanInput($_POST["loginEmail"])
-		$_POST["loginPassword"] = cleanInput($_POST["loginPassword"]
+		  
+		$_POST["loginEmail"] = cleanInput($_POST["loginEmail"]);
+		$_POST["loginPassword"] = cleanInput($_POST["loginPassword"]);
 		//login sisse
 		$error = login($_POST["loginEmail"], $_POST["loginPassword"]);
 	}
@@ -169,6 +170,7 @@
 				<input type="radio" name="gender" value="other" > Other<br>
 			 <?php } ?>
 			 
+			 <br>
 			
 			<input type="submit" value="Loo kasutaja">
 			
