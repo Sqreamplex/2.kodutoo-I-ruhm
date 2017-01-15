@@ -14,14 +14,14 @@
 	
 	$database = "if16_mikuz_1";
 	
-	function signup ($email, $password, $gender) {
+	function signup ($email, $password, $gender, $name) {
 		
 		$mysqli = new mysqli($GLOBALS["serverHost"],$GLOBALS["serverUsername"],$GLOBALS["serverPassword"],$GLOBALS["database"]);
 
-		$stmt = $mysqli->prepare("INSERT INTO user_sample (email, password, gender) VALUES (?, ?, ?)");
+		$stmt = $mysqli->prepare("INSERT INTO user_sample (email, password, gender, name) VALUES (?, ?, ?, ?)");
 		echo $mysqli->error;
 
-		$stmt->bind_param("sss", $email, $password, $gender);
+		$stmt->bind_param("ssss", $email, $password, $gender, $name);
 		
 		if ($stmt->execute()) {
 			echo "salvestamine õnnestus";

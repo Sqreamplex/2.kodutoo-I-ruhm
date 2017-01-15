@@ -22,6 +22,8 @@
 	$loginEmailError = "";
 	$loginPasswordError = "";
 	$loginEmail = "";
+	$Nickname = "";
+	$Nicknameerror = "";
 
 	// kas e/post oli olemas
 	if ( isset ( $_POST["signupEmail"] ) ) {
@@ -33,6 +35,15 @@
 			$signupEmail = $_POST["signupEmail"];
 			
 			
+		}
+	}
+
+	if ( isset ( $_POST["Nickname"] ) ) {
+		if ( empty ( $_POST["Nickname"] ) ) {
+			$Nicknameerror = "See väli on kohustuslik!";
+		} else {
+			
+			$Nickname = $_POST["Nickname"];
 		}
 	}
 	
@@ -83,20 +94,23 @@
 	
 	// Kus tean et ühtegi viga ei olnud ja saan kasutaja andmed salvestada
 	if ( isset($_POST["signupPassword"]) &&
-		 isset($_POST["signupEmail"]) &&	
-		 empty($signupEmailError) && 
-		 empty($signupPasswordError)
+		isset($_POST["signupEmail"]) &&
+		isset($_POST["Nickname"]) &&
+		empty($signupEmailError) && 
+		empty($signupPasswordError) &&
+		empty($Nicknameerror) 
 	   ) {
 		echo "Salvestan...<br>";
 		echo "email ".$signupEmail."<br>";
 		$password = hash("sha512", $_POST["signupPassword"]);
 		echo "parool ".$_POST["signupPassword"]."<br>";
 		echo "räsi ".$password."<br>";
-		//echo $serverPassword;
+		echo "name " .$Nickname."<br>";
 		$signupEmail = cleanInput($signupEmail);
 		$password = cleanInput($password);
 		$gender = cleanInput($gender);
-		signup($signupEmail, $password, $gender);
+		$Nickname = cleanInput($Nickname);
+		signup($signupEmail, $password, $gender, $Nickname);
 	}
 	
 	$error = "";
@@ -131,7 +145,7 @@
 			
 			<br><br>
 			
-			<input name="loginPassword" type="password" placeholder="Parool"><?php echo $loginPasswordError; ?>
+			<input name="loginPassword" type="password" placeholder="Parool"> <?php echo $loginPasswordError; ?>
 			
 			<br><br>
 			
@@ -170,7 +184,10 @@
 				<input type="radio" name="gender" value="other" > Other<br>
 			 <?php } ?>
 			 
-			 <br>
+			<br>
+			<label>Nickname</label><br>
+			<input name="Nickname" type="text"> <?php echo $Nicknameerror; ?>
+			<br><br>
 			
 			<input type="submit" value="Loo kasutaja">
 			

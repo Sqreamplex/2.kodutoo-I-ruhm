@@ -24,9 +24,8 @@
 		 !empty($_POST["sunnipaev"]) &&
 		 !empty($_POST["telefon"])
 	  ) {
-		$sunnipaev = cleanInput($_POST["sunnipaev"]);
 		
-		bdayandtel($sunnipaev, cleanInput($_POST["telefon"]));
+		bdayandtel(cleanInput($_POST["sunnipaev"]), cleanInput($_POST["telefon"]));
 	}
 	
 	$infoall = dataAll();
